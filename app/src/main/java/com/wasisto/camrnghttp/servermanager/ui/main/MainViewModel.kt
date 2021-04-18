@@ -23,6 +23,7 @@ import com.wasisto.camrnghttp.servermanager.domain.usecases.StartServerUseCase
 import com.wasisto.camrnghttp.servermanager.domain.usecases.StopServerUseCase
 import com.wasisto.camrnghttp.servermanager.ui.Event
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
@@ -30,8 +31,8 @@ class MainViewModel(
     private val startServerUseCase: StartServerUseCase,
     private val stopServerUseCase: StopServerUseCase,
     private val getServerIpAddressUseCase: GetServerIpAddressUseCase,
-    private val ioDispatcher: CoroutineDispatcher,
-    private val mainDispatcher: CoroutineDispatcher
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+    private val mainDispatcher: CoroutineDispatcher = Dispatchers.Main
 ) : ViewModel() {
 
     val ipAddress = MutableLiveData<String>()

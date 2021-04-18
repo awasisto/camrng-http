@@ -39,9 +39,10 @@ class CamrngRandomDataSource(private val context: Context) : RandomDataSource {
 
     fun stop() {
         NoiseBasedCamRng.reset()
+        byteIterator = null
     }
 
     override fun randBytes(bytes: ByteArray) {
-        for (i in bytes.indices) bytes[i] = byteIterator!!.next()
+        byteIterator?.let { for (i in bytes.indices) bytes[i] = it.next() } ?: throw IllegalStateException()
     }
 }

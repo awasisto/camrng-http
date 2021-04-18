@@ -18,13 +18,14 @@ package com.wasisto.camrnghttp.server.api
 
 import com.google.gson.Gson
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse
+import timber.log.Timber
 
 class ErrorHandler {
 
     private val gson = Gson()
 
-    fun handle(throwable: Throwable, response: AsyncHttpServerResponse) {
-        when(throwable) {
+    fun handle(t: Throwable, response: AsyncHttpServerResponse) {
+        when(t) {
             is IllegalArgumentException -> {
                 response.code(422).send(
                     CONTENT_TYPE_JSON, gson.toJson(mapOf(
@@ -32,6 +33,7 @@ class ErrorHandler {
                 )))
             }
             else -> {
+                Timber.w(t)
                 response.code(500).send(
                     CONTENT_TYPE_JSON, gson.toJson(mapOf(
                     Pair(JSON_ATTRIBUTE_MESSAGE, ERROR_SERVER_ERROR)

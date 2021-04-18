@@ -17,6 +17,7 @@
 package com.wasisto.camrnghttp.servermanager.ui.main
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.wasisto.camrnghttp.MainCoroutineRule
 import com.wasisto.camrnghttp.R
 import com.wasisto.camrnghttp.servermanager.domain.usecases.GetServerIpAddressUseCase
 import com.wasisto.camrnghttp.servermanager.domain.usecases.StartServerUseCase
@@ -27,8 +28,8 @@ import io.mockk.impl.annotations.MockK
 import io.mockk.verify
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestCoroutineDispatcher
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Before
@@ -51,7 +52,8 @@ class MainViewModelTest {
     @MockK
     private lateinit var getServerIpAddressUseCase: GetServerIpAddressUseCase
 
-    private val testCoroutineDispatcher = TestCoroutineDispatcher()
+    @get:Rule
+    var coroutineRule = MainCoroutineRule()
 
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
@@ -63,20 +65,13 @@ class MainViewModelTest {
             startServerUseCase,
             stopServerUseCase,
             getServerIpAddressUseCase,
-            testCoroutineDispatcher,
-            testCoroutineDispatcher
+            coroutineRule.dispatcher,
+            coroutineRule.dispatcher
         )
-        Dispatchers.setMain(testCoroutineDispatcher)
-    }
-
-    @After
-    fun tearDown() {
-        Dispatchers.resetMain()
-        testCoroutineDispatcher.cleanupTestCoroutines()
     }
 
     @Test
-    fun testOnStartStopButtonClick_startServer() {
+    fun testOnStartStopButtonClick_startServer() = coroutineRule.runBlockingTest {
         val serverIpAddress = "192.168.1.100"
         val port = 8080
 
@@ -93,7 +88,7 @@ class MainViewModelTest {
     }
 
     @Test
-    fun testOnStartStopButtonClick_startServer_error() {
+    fun testOnStartStopButtonClick_startServer_error() = coroutineRule.runBlockingTest {
         val port = 8080
 
         every { startServerUseCase(any()) }.throws(Exception())
@@ -109,7 +104,7 @@ class MainViewModelTest {
     }
 
     @Test
-    fun testOnStartStopButtonClick_stopServer() {
+    fun testOnStartStopButtonClick_stopServer() = coroutineRule.runBlockingTest {
         testOnStartStopButtonClick_startServer()
 
         mainViewModel.onStartStopButtonClick()
@@ -122,7 +117,7 @@ class MainViewModelTest {
     }
 
     @Test
-    fun testOnStartStopButtonClick_stopServer_error() {
+    fun testOnStartStopButtonClick_stopServer_error() = coroutineRule.runBlockingTest {
         testOnStartStopButtonClick_startServer()
 
         every { stopServerUseCase() }.throws(Exception())
@@ -137,7 +132,7 @@ class MainViewModelTest {
     }
 
     @Test
-    fun testOnActivityStopped() {
+    fun testOnActivityStopped() = coroutineRule.runBlockingTest {
         mainViewModel.onActivityStopped()
         verify { stopServerUseCase() }
     }
