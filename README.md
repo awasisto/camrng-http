@@ -1,7 +1,7 @@
 CamRNG HTTP
 ===========
 
-An HTTP API for [CamRNG](https://github.com/awasisto/camrng) quantum random number generator.
+An HTTP API server for [CamRNG](https://github.com/awasisto/camrng) quantum random number generator.
 
 Screenshots
 -----------
