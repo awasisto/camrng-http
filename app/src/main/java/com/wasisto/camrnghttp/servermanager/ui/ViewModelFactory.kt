@@ -23,7 +23,6 @@ import com.wasisto.camrnghttp.servermanager.domain.interfaces.Server
 import com.wasisto.camrnghttp.servermanager.domain.usecases.StartServerUseCase
 import com.wasisto.camrnghttp.servermanager.domain.usecases.StopServerUseCase
 import com.wasisto.camrnghttp.servermanager.ui.main.MainViewModel
-import kotlinx.coroutines.Dispatchers
 
 class ViewModelFactory(private val server: Server) : ViewModelProvider.NewInstanceFactory() {
     @Suppress("UNCHECKED_CAST")
@@ -34,9 +33,7 @@ class ViewModelFactory(private val server: Server) : ViewModelProvider.NewInstan
                     MainViewModel(
                         StartServerUseCase(server),
                         StopServerUseCase(server),
-                        GetServerIpAddressUseCase(server),
-                        Dispatchers.IO,
-                        Dispatchers.Main
+                        GetServerIpAddressUseCase(server)
                     )
                 else -> throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
