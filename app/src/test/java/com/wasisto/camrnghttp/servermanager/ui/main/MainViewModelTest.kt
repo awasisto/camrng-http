@@ -106,7 +106,9 @@ class MainViewModelTest {
 
     @Test
     fun testOnStartStopButtonClick_stopServer() = coroutineRule.runBlockingTest {
-        testOnStartStopButtonClick_startServer()
+        every { getServerIpAddressUseCase() }.returns("192.168.1.100")
+        mainViewModel.port.value = "8080"
+        mainViewModel.onStartStopButtonClick()
 
         mainViewModel.onStartStopButtonClick()
 
@@ -120,7 +122,9 @@ class MainViewModelTest {
 
     @Test
     fun testOnStartStopButtonClick_stopServer_error() = coroutineRule.runBlockingTest {
-        testOnStartStopButtonClick_startServer()
+        every { getServerIpAddressUseCase() }.returns("192.168.1.100")
+        mainViewModel.port.value = "8080"
+        mainViewModel.onStartStopButtonClick()
 
         every { stopServerUseCase() }.throws(Exception())
 
