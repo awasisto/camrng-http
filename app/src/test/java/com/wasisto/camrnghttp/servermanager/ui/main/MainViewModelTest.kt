@@ -71,7 +71,7 @@ class MainViewModelTest {
     }
 
     @Test
-    fun testOnStartStopButtonClick_startServer() {
+    fun testOnStartStopButtonClick_startServer() = coroutineRule.runBlockingTest {
         val serverIpAddress = "192.168.1.100"
         val port = 8080
 
