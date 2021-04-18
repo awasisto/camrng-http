@@ -19,6 +19,7 @@
     <string name="port">Port</string>
     <string name="start_server">Start server</string>
     <string name="stop_server">Stop server</string>
+    <string name="blank_screen">Blank screen</string>
     <string name="server_running">Server running on http://%s:%s</string>
     <string name="an_error_occurred">An error occurred</string>
     <string name="about">About</string>
