@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package com.wasisto.camrnghttp.servermanager
+package com.wasisto.camrnghttp
 
 import android.app.Application
 import android.util.Log
-import com.wasisto.camrnghttp.BuildConfig
 import timber.log.Timber
 
 class CamrngHttpApp : Application() {

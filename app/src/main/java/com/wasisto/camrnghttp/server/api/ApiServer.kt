@@ -20,7 +20,7 @@ import android.content.Context
 import android.net.wifi.WifiManager
 import android.text.format.Formatter.formatIpAddress
 import com.koushikdutta.async.http.server.AsyncHttpServer
-import com.wasisto.camrnghttp.server.data.CamrngRandomDataSource
+import com.wasisto.camrnghttp.random.CamrngRandomDataSource
 import com.wasisto.camrnghttp.server.domain.usecases.*
 import com.wasisto.camrnghttp.servermanager.domain.interfaces.Server
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.wasisto.camrnghttp.server.data
+package com.wasisto.camrnghttp.random
 
 import com.wasisto.camrnghttp.server.domain.interfaces.RandomDataSource
 import java.util.*

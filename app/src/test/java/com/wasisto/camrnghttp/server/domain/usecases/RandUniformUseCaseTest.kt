@@ -16,7 +16,7 @@
 
 package com.wasisto.camrnghttp.server.domain.usecases
 
-import com.wasisto.camrnghttp.server.data.PrngRandomDataSource
+import com.wasisto.camrnghttp.random.PrngRandomDataSource
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
