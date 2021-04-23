@@ -19,6 +19,7 @@ package com.wasisto.camrnghttp.server.api
 import android.content.Context
 import android.net.wifi.WifiManager
 import android.text.format.Formatter.formatIpAddress
+import com.google.gson.GsonBuilder
 import com.koushikdutta.async.http.server.AsyncHttpServer
 import com.wasisto.camrnghttp.random.CamrngRandomDataSource
 import com.wasisto.camrnghttp.server.domain.usecases.*
@@ -36,7 +37,8 @@ class ApiServer(context: Context) : Server {
             RandBoolUseCase(camrngRandomDataSource),
             RandInt32UseCase(camrngRandomDataSource),
             RandUniformUseCase(camrngRandomDataSource),
-            RandNormalUseCase(camrngRandomDataSource)
+            RandNormalUseCase(camrngRandomDataSource),
+            GsonBuilder().disableHtmlEscaping().create()
         )
 
     private val errorHandler = ErrorHandler()
