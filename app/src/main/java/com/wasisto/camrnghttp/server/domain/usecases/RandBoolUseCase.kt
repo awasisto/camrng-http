@@ -19,7 +19,7 @@ package com.wasisto.camrnghttp.server.domain.usecases
 import com.wasisto.camrnghttp.server.domain.interfaces.RandomDataSource
 
 class RandBoolUseCase(private val randomDataSource: RandomDataSource) {
-    operator fun invoke(length: Int) =
+    operator fun invoke(length: Int): List<Boolean> =
         ArrayList<Boolean>(length).apply {
             val bytes = ByteArray((length shr 3) + 1).apply { randomDataSource.randBytes(this) }
             for (byte in bytes) {
