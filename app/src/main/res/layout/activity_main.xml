@@ -20,53 +20,78 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
         <variable name="viewModel" type="com.wasisto.camrnghttp.servermanager.ui.main.MainViewModel" />
     </data>
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
         android:keepScreenOn="@{viewModel.shouldKeepScreenOn}">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="@string/port"
-            android:enabled="@{!viewModel.shouldDisablePortInputField}"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="80dp"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:importantForAutofill="no"
-                android:singleLine="true"
-                android:maxLength="5"
-                android:digits="0123456789"
-                android:text="@={viewModel.port}" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:textAllCaps="false"
-            android:letterSpacing="0"
-            android:onClick="@{() -> viewModel.onStartStopButtonClick()}"
-            android:text="@{viewModel.startStopButtonText}"
-            android:enabled="@{!viewModel.shouldDisableStartStopButton}"
-            tools:text="@string/start_server"
-            style="@style/Widget.MaterialComponents.Button.UnelevatedButton" />
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_height="match_parent"
             android:gravity="center"
-            android:text="@{String.format(@string/server_running, viewModel.ipAddress, viewModel.port)}"
-            invisibleUnless="@{viewModel.shouldShowServerRunningIndicator}"
-            tools:text="Server running on http://192.168.0.42:8080"/>
-    </LinearLayout>
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/port"
+                android:enabled="@{!viewModel.shouldDisablePortInputField}"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:importantForAutofill="no"
+                    android:singleLine="true"
+                    android:maxLength="5"
+                    android:digits="0123456789"
+                    android:text="@={viewModel.port}" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:textAllCaps="false"
+                android:letterSpacing="0"
+                android:onClick="@{() -> viewModel.onStartStopButtonClick()}"
+                android:text="@{viewModel.startStopButtonText}"
+                android:enabled="@{!viewModel.shouldDisableStartStopButton}"
+                tools:text="@string/start_server"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton" />
+
+            <Button
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:textAllCaps="false"
+                android:letterSpacing="0"
+                android:text="@string/blank_screen"
+                android:onClick="@{() -> viewModel.onBlankScreenButtonClick()}"
+                android:enabled="@{!viewModel.shouldDisableBlankScreenButton}"
+                tools:enabled="false"
+                style="@style/Widget.MaterialComponents.Button.UnelevatedButton" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:text="@{String.format(@string/server_running, viewModel.ipAddress, viewModel.port)}"
+                android:visibility="@{viewModel.shouldShowServerRunningIndicator ? View.VISIBLE : View.INVISIBLE}"
+                tools:text="Server running on http://192.168.0.42:8080"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/black"
+            android:visibility="@{viewModel.shouldBlankScreen ? View.VISIBLE : View.INVISIBLE}"
+            android:onClick="@{() -> viewModel.onScreenBlankerOverlayClick()}"
+            tools:visibility="gone"/>
+    </FrameLayout>
 </layout>

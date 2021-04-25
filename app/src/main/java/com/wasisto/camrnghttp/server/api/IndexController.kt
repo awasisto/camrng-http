@@ -14,16 +14,13 @@
  * limitations under the License.
  */
 
-package com.wasisto.camrnghttp.server.data
+package com.wasisto.camrnghttp.server.api
 
-import com.wasisto.camrnghttp.server.domain.interfaces.RandomDataSource
-import java.util.*
+import com.koushikdutta.async.http.server.AsyncHttpServerRequest
+import com.koushikdutta.async.http.server.AsyncHttpServerResponse
 
-class PrngRandomDataSource(seed: Long) : RandomDataSource {
-
-    private val random = Random(seed)
-
-    override fun randBytes(bytes: ByteArray) {
-        random.nextBytes(bytes)
+class IndexController {
+    fun index(request: AsyncHttpServerRequest, response: AsyncHttpServerResponse) {
+        response.send("API Documentation: <a href=\"https://github.com/awasisto/camrng-http/wiki\">https://github.com/awasisto/camrng-http/wiki</a>")
     }
 }

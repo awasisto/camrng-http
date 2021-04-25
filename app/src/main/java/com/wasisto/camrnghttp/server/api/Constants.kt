@@ -16,7 +16,7 @@
 
 package com.wasisto.camrnghttp.server.api
 
-const val API_PATH_PREFIX = "/api"
+const val REST_API_PATH_PREFIX = "/api"
 
 const val CONTENT_TYPE_JSON = "application/json"
 

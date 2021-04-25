@@ -43,9 +43,13 @@ class MainViewModel(
 
     val shouldDisableStartStopButton = MutableLiveData(false)
 
+    val shouldDisableBlankScreenButton = MutableLiveData(true)
+
     val shouldDisablePortInputField = MutableLiveData(false)
 
     val shouldShowServerRunningIndicator = MutableLiveData(false)
+
+    val shouldBlankScreen = MutableLiveData(false)
 
     val shouldKeepScreenOn = MutableLiveData(false)
 
@@ -55,6 +59,14 @@ class MainViewModel(
 
     fun onStartStopButtonClick() {
         if (!serverRunning) startServer() else stopServer()
+    }
+
+    fun onBlankScreenButtonClick() {
+        shouldBlankScreen.value = true
+    }
+
+    fun onScreenBlankerOverlayClick() {
+        shouldBlankScreen.value = false
     }
 
     fun onActivityStopped() {
@@ -76,6 +88,7 @@ class MainViewModel(
                     startStopButtonText.value = R.string.stop_server
                     shouldShowServerRunningIndicator.value = true
                     shouldKeepScreenOn.value = true
+                    shouldDisableBlankScreenButton.value = false
                 }
 
                 serverRunning = true
@@ -106,6 +119,8 @@ class MainViewModel(
                     startStopButtonText.value = R.string.start_server
                     shouldShowServerRunningIndicator.value = false
                     shouldKeepScreenOn.value = false
+                    shouldBlankScreen.value = false
+                    shouldDisableBlankScreenButton.value = true
                 }
 
                 serverRunning = false

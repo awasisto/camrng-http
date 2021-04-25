@@ -21,8 +21,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
+import android.view.*
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -61,10 +60,26 @@ class MainActivity : AppCompatActivity() {
         viewModel.showErrorEvent.observe(this) {
             Toast.makeText(this, R.string.an_error_occurred, Toast.LENGTH_SHORT).show()
         }
+
+        viewModel.shouldBlankScreen.observe(this) { shouldBlankScreen ->
+            if (shouldBlankScreen) {
+                supportActionBar?.hide()
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_IMMERSIVE
+            } else {
+                supportActionBar?.show()
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+            }
+        }
+
+        window.decorView.setOnSystemUiVisibilityChangeListener {
+            if (viewModel.shouldBlankScreen.value == true) {
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_IMMERSIVE
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_server_manager, menu)
+        menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
 

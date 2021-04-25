@@ -20,9 +20,7 @@ import com.google.gson.Gson
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse
 import timber.log.Timber
 
-class ErrorHandler {
-
-    private val gson = Gson()
+class RestApiErrorHandler(private val gson: Gson) {
 
     fun handle(t: Throwable, response: AsyncHttpServerResponse) {
         when(t) {

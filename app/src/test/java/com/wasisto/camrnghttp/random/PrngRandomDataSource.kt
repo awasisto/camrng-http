@@ -14,12 +14,16 @@
  * limitations under the License.
  */
 
-package com.wasisto.camrnghttp.servermanager.ui
+package com.wasisto.camrnghttp.random
 
-import android.view.View
-import androidx.databinding.BindingAdapter
+import com.wasisto.camrnghttp.server.domain.interfaces.RandomDataSource
+import java.util.*
 
-@BindingAdapter("invisibleUnless")
-fun invisibleUnless(view: View, visible: Boolean) {
-    view.visibility = if (visible) View.VISIBLE else View.INVISIBLE
+class PrngRandomDataSource(seed: Long) : RandomDataSource {
+
+    private val random = Random(seed)
+
+    override fun randBytes(bytes: ByteArray) {
+        random.nextBytes(bytes)
+    }
 }

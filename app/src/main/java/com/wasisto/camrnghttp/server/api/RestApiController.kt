@@ -16,25 +16,21 @@
 
 package com.wasisto.camrnghttp.server.api
 
+import com.google.gson.Gson
 import com.koushikdutta.async.http.server.AsyncHttpServerRequest
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse
 import java.util.*
 import com.google.gson.GsonBuilder
 import com.wasisto.camrnghttp.server.domain.usecases.*
 
-class Controller(
+class RestApiController(
     private val randBytesUseCase: RandBytesUseCase,
     private val randBoolUseCase: RandBoolUseCase,
     private val randInt32UseCase: RandInt32UseCase,
     private val randUniformUseCase: RandUniformUseCase,
-    private val randNormalUseCase: RandNormalUseCase
+    private val randNormalUseCase: RandNormalUseCase,
+    private val gson: Gson
 ) {
-    private val gson = GsonBuilder().disableHtmlEscaping().create()
-
-    fun index(request: AsyncHttpServerRequest, response: AsyncHttpServerResponse) {
-        response.send("Docs: <a href=\"https://github.com/awasisto/camrng-http/wiki\">https://github.com/awasisto/camrng-http/wiki</a>")
-    }
-
     fun randBytes(request: AsyncHttpServerRequest, response: AsyncHttpServerResponse) {
         val length = request[PARAM_LENGTH]?.toIntOrNull() ?: throw IllegalArgumentException()
         require(length >= 0)

@@ -85,6 +85,7 @@ class MainViewModelTest {
         assertEquals(R.string.stop_server, mainViewModel.startStopButtonText.value)
         assertEquals(true, mainViewModel.shouldShowServerRunningIndicator.value)
         assertEquals(true, mainViewModel.shouldKeepScreenOn.value)
+        assertEquals(false, mainViewModel.shouldDisableBlankScreenButton.value)
     }
 
     @Test
@@ -105,7 +106,9 @@ class MainViewModelTest {
 
     @Test
     fun testOnStartStopButtonClick_stopServer() = coroutineRule.runBlockingTest {
-        testOnStartStopButtonClick_startServer()
+        every { getServerIpAddressUseCase() }.returns("192.168.1.100")
+        mainViewModel.port.value = "8080"
+        mainViewModel.onStartStopButtonClick()
 
         mainViewModel.onStartStopButtonClick()
 
@@ -114,11 +117,14 @@ class MainViewModelTest {
         assertEquals(R.string.start_server, mainViewModel.startStopButtonText.value)
         assertEquals(false, mainViewModel.shouldShowServerRunningIndicator.value)
         assertEquals(false, mainViewModel.shouldKeepScreenOn.value)
+        assertEquals(true, mainViewModel.shouldDisableBlankScreenButton.value)
     }
 
     @Test
     fun testOnStartStopButtonClick_stopServer_error() = coroutineRule.runBlockingTest {
-        testOnStartStopButtonClick_startServer()
+        every { getServerIpAddressUseCase() }.returns("192.168.1.100")
+        mainViewModel.port.value = "8080"
+        mainViewModel.onStartStopButtonClick()
 
         every { stopServerUseCase() }.throws(Exception())
 
@@ -129,6 +135,22 @@ class MainViewModelTest {
         assertEquals(R.string.stop_server, mainViewModel.startStopButtonText.value)
         assertEquals(true, mainViewModel.shouldShowServerRunningIndicator.value)
         assertEquals(true, mainViewModel.shouldKeepScreenOn.value)
+    }
+
+    @Test
+    fun testOnBlankScreenButtonClick() {
+        mainViewModel.onBlankScreenButtonClick()
+        assertEquals(true, mainViewModel.shouldBlankScreen.value)
+    }
+
+    @Test
+    fun testOnScreenBlankerOverlayClick() {
+        mainViewModel.onStartStopButtonClick()
+        mainViewModel.onBlankScreenButtonClick()
+
+        mainViewModel.onScreenBlankerOverlayClick()
+
+        assertEquals(false, mainViewModel.shouldBlankScreen.value)
     }
 
     @Test

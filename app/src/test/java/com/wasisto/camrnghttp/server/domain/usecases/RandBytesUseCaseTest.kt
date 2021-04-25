@@ -16,7 +16,7 @@
 
 package com.wasisto.camrnghttp.server.domain.usecases
 
-import com.wasisto.camrnghttp.server.data.PrngRandomDataSource
+import com.wasisto.camrnghttp.random.PrngRandomDataSource
 import org.apache.commons.codec.binary.Base64
 import org.apache.commons.codec.binary.Hex
 import org.junit.Assert.assertArrayEquals
