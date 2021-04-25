@@ -28,7 +28,7 @@ class RandBytesUseCase(private val randomDataSource: RandomDataSource) {
 
     operator fun invoke(length: Int, format: Format): String =
         when (format) {
-            Format.Base64 -> Base64.encodeBase64String(ByteArray(length).apply { randomDataSource.randBytes(this) })
-            Format.Hex -> Hex.encodeHexString(ByteArray(length).apply { randomDataSource.randBytes(this) })
+            Format.Base64 -> String(Base64.encodeBase64(ByteArray(length).apply { randomDataSource.randBytes(this) }))
+            Format.Hex -> String(Hex.encodeHex(ByteArray(length).apply { randomDataSource.randBytes(this) }))
         }
 }
