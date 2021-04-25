@@ -16,29 +16,11 @@
 
 package com.wasisto.camrnghttp.server.api
 
-import com.google.gson.Gson
+import com.koushikdutta.async.http.server.AsyncHttpServerRequest
 import com.koushikdutta.async.http.server.AsyncHttpServerResponse
-import timber.log.Timber
 
-class ErrorHandler {
-
-    private val gson = Gson()
-
-    fun handle(t: Throwable, response: AsyncHttpServerResponse) {
-        when(t) {
-            is IllegalArgumentException -> {
-                response.code(422).send(
-                    CONTENT_TYPE_JSON, gson.toJson(mapOf(
-                    Pair(JSON_ATTRIBUTE_MESSAGE, ERROR_VALIDATION_FAILED)
-                )))
-            }
-            else -> {
-                Timber.w(t)
-                response.code(500).send(
-                    CONTENT_TYPE_JSON, gson.toJson(mapOf(
-                    Pair(JSON_ATTRIBUTE_MESSAGE, ERROR_SERVER_ERROR)
-                )))
-            }
-        }
+class IndexController {
+    fun index(request: AsyncHttpServerRequest, response: AsyncHttpServerResponse) {
+        response.send("API Documentation: <a href=\"https://github.com/awasisto/camrng-http/wiki\">https://github.com/awasisto/camrng-http/wiki</a>")
     }
 }

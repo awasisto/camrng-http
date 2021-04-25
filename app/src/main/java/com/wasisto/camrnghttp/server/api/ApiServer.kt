@@ -31,31 +31,35 @@ class ApiServer(context: Context) : Server {
 
     private val httpServer = AsyncHttpServer()
 
-    private val controller =
-        Controller(
+    private val gson = GsonBuilder().disableHtmlEscaping().create()
+
+    private val indexController = IndexController()
+
+    private val restApiController =
+        RestApiController(
             RandBytesUseCase(camrngRandomDataSource),
             RandBoolUseCase(camrngRandomDataSource),
             RandInt32UseCase(camrngRandomDataSource),
             RandUniformUseCase(camrngRandomDataSource),
             RandNormalUseCase(camrngRandomDataSource),
-            GsonBuilder().disableHtmlEscaping().create()
+            gson
         )
 
-    private val errorHandler = ErrorHandler()
+    private val restApiErrorHandler = RestApiErrorHandler(gson)
 
     private val wifiManager = context.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
 
     init {
-        httpServer.get("/") { request, response -> controller.index(request, response) }
-        httpServer.get("$API_PATH_PREFIX/$ACTION_RANDBYTES") { request, response -> try { controller.randBytes(request, response) } catch (t: Throwable) { errorHandler.handle(t, response) } }
-        httpServer.get("$API_PATH_PREFIX/$ACTION_RANDBOOL") { request, response -> try { controller.randBool(request, response) } catch (t: Throwable) { errorHandler.handle(t, response) } }
-        httpServer.get("$API_PATH_PREFIX/$ACTION_RANDINT32") { request, response -> try { controller.randInt32(request, response) } catch (t: Throwable) { errorHandler.handle(t, response) } }
-        httpServer.get("$API_PATH_PREFIX/$ACTION_RANDUNIFORM") { request, response -> try { controller.randUniform(request, response) } catch (t: Throwable) { errorHandler.handle(t, response) } }
-        httpServer.get("$API_PATH_PREFIX/$ACTION_RANDNORMAL") { request, response -> try { controller.randNormal(request, response) } catch (t: Throwable) { errorHandler.handle(t, response) } }
+        httpServer.get("/") { request, response -> indexController.index(request, response) }
+        httpServer.get("$REST_API_PATH_PREFIX/$ACTION_RANDBYTES") { request, response -> try { restApiController.randBytes(request, response) } catch (t: Throwable) { restApiErrorHandler.handle(t, response) } }
+        httpServer.get("$REST_API_PATH_PREFIX/$ACTION_RANDBOOL") { request, response -> try { restApiController.randBool(request, response) } catch (t: Throwable) { restApiErrorHandler.handle(t, response) } }
+        httpServer.get("$REST_API_PATH_PREFIX/$ACTION_RANDINT32") { request, response -> try { restApiController.randInt32(request, response) } catch (t: Throwable) { restApiErrorHandler.handle(t, response) } }
+        httpServer.get("$REST_API_PATH_PREFIX/$ACTION_RANDUNIFORM") { request, response -> try { restApiController.randUniform(request, response) } catch (t: Throwable) { restApiErrorHandler.handle(t, response) } }
+        httpServer.get("$REST_API_PATH_PREFIX/$ACTION_RANDNORMAL") { request, response -> try { restApiController.randNormal(request, response) } catch (t: Throwable) { restApiErrorHandler.handle(t, response) } }
     }
 
     override fun start(port: Int) {
-        require(port in 1024..65535) { "port out of range:$port" }
+        require(port in 1024..65535)
         camrngRandomDataSource.start()
         httpServer.listen(port)
     }
