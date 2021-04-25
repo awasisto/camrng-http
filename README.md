@@ -3,6 +3,8 @@ CamRNG HTTP
 
 An HTTP API server for [CamRNG](https://github.com/awasisto/camrng) quantum random number generator.
 
+https://play.google.com/store/apps/details?id=com.wasisto.camrnghttp
+
 Screenshots
 -----------
 
