@@ -8,8 +8,8 @@ https://play.google.com/store/apps/details?id=com.wasisto.camrnghttp
 Screenshots
 -----------
 
-![CamRNG HTTP screenshot 1](https://lh3.googleusercontent.com/vjYA8K0jdwoIst_mibni7EQkhV3pMs_RBDyHXCiZNKhj1mU09Ib2Hi2oLZWNy2RUEI7V=w250-rw)
-![CamRNG HTTP screenshot 2](https://lh3.googleusercontent.com/m8E0Et3TMRamPdRgr8d7x_fbGMRiZBNWhS6lzhe2v6kr3EPmfdXC63ZvcNqXiWG2oVts=w250-rw)
+![Screenshot 1](https://i.imgur.com/BlgODG0.png)
+![Screenshot 2](https://i.imgur.com/wcz5vkC.png)
 
 API Documentation
 -----------------
