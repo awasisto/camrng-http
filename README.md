@@ -14,7 +14,7 @@ Screenshots
 Architecture
 ------------
 
-![Architecture](https://i.imgur.com/LKMst4M.png)
+![Architecture](https://i.imgur.com/X6QoIup.png)
 
 API Documentation
 -----------------
