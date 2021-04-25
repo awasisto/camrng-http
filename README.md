@@ -11,6 +11,11 @@ Screenshots
 ![Screenshot 1](https://i.imgur.com/BlgODG0.png)
 ![Screenshot 2](https://i.imgur.com/wcz5vkC.png)
 
+Architecture
+------------
+
+![Architecture](https://i.imgur.com/LKMst4M.png)
+
 API Documentation
 -----------------
 
