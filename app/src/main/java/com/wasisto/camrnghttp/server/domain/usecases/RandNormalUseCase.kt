@@ -16,21 +16,21 @@
 
 package com.wasisto.camrnghttp.server.domain.usecases
 
-import com.wasisto.camrnghttp.server.domain.interfaces.RandomDataSource
+import com.wasisto.camrnghttp.server.domain.interfaces.Rng
 import org.apache.commons.rng.UniformRandomProvider
 import org.apache.commons.rng.sampling.distribution.ZigguratNormalizedGaussianSampler
 import java.nio.ByteBuffer
 
-class RandNormalUseCase(randomDataSource: RandomDataSource) {
+class RandNormalUseCase(rng: Rng) {
 
     companion object {
-        private val samplerInstances = mutableMapOf<RandomDataSource, ZigguratNormalizedGaussianSampler>()
+        private val samplerInstances = mutableMapOf<Rng, ZigguratNormalizedGaussianSampler>()
 
-        private fun getSamplerInstance(randomDataSource: RandomDataSource) =
-            samplerInstances[randomDataSource]
+        private fun getSamplerInstance(rng: Rng) =
+            samplerInstances[rng]
                 ?: ZigguratNormalizedGaussianSampler(
                     object : UniformRandomProvider {
-                        override fun nextLong() = ByteBuffer.wrap(ByteArray(8).apply { randomDataSource.randBytes(this) }).long
+                        override fun nextLong() = ByteBuffer.wrap(ByteArray(8).apply { rng.randBytes(this) }).long
                         override fun nextDouble() = (nextLong() ushr 11) / (1L shl 53).toDouble()
                         override fun nextBytes(bytes: ByteArray) = throw NotImplementedError()
                         override fun nextBytes(bytes: ByteArray, start: Int, len: Int) = throw NotImplementedError()
@@ -41,11 +41,11 @@ class RandNormalUseCase(randomDataSource: RandomDataSource) {
                         override fun nextFloat() = throw NotImplementedError()
                     }
                 ).also {
-                    samplerInstances[randomDataSource] = it
+                    samplerInstances[rng] = it
                 }
     }
 
-    private val sampler = getSamplerInstance(randomDataSource)
+    private val sampler = getSamplerInstance(rng)
 
     operator fun invoke(mu: Double, sigma: Double, length: Int) = List(length) { mu + sampler.sample() * sigma }
 }

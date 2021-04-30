@@ -21,13 +21,13 @@ import android.net.wifi.WifiManager
 import android.text.format.Formatter.formatIpAddress
 import com.google.gson.GsonBuilder
 import com.koushikdutta.async.http.server.AsyncHttpServer
-import com.wasisto.camrnghttp.random.CamrngRandomDataSource
+import com.wasisto.camrnghttp.rng.CameraNoiseBasedRng
 import com.wasisto.camrnghttp.server.domain.usecases.*
 import com.wasisto.camrnghttp.servermanager.domain.interfaces.Server
 
 class ApiServer(context: Context) : Server {
 
-    private val camrngRandomDataSource = CamrngRandomDataSource(context)
+    private val cameraNoiseBasedRng = CameraNoiseBasedRng(context)
 
     private val httpServer = AsyncHttpServer()
 
@@ -37,11 +37,11 @@ class ApiServer(context: Context) : Server {
 
     private val restApiController =
         RestApiController(
-            RandBytesUseCase(camrngRandomDataSource),
-            RandBoolUseCase(camrngRandomDataSource),
-            RandInt32UseCase(camrngRandomDataSource),
-            RandUniformUseCase(camrngRandomDataSource),
-            RandNormalUseCase(camrngRandomDataSource),
+            RandBytesUseCase(cameraNoiseBasedRng),
+            RandBoolUseCase(cameraNoiseBasedRng),
+            RandInt32UseCase(cameraNoiseBasedRng),
+            RandUniformUseCase(cameraNoiseBasedRng),
+            RandNormalUseCase(cameraNoiseBasedRng),
             gson
         )
 
@@ -60,13 +60,13 @@ class ApiServer(context: Context) : Server {
 
     override fun start(port: Int) {
         require(port in 1024..65535)
-        camrngRandomDataSource.start()
+        cameraNoiseBasedRng.start()
         httpServer.listen(port)
     }
 
     override fun stop() {
         httpServer.stop()
-        camrngRandomDataSource.stop()
+        cameraNoiseBasedRng.stop()
     }
 
     @Suppress("DEPRECATION")

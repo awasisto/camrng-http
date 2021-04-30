@@ -16,11 +16,11 @@
 
 package com.wasisto.camrnghttp.server.domain.usecases
 
-import com.wasisto.camrnghttp.server.domain.interfaces.RandomDataSource
+import com.wasisto.camrnghttp.server.domain.interfaces.Rng
 import org.apache.commons.codec.binary.Base64
 import org.apache.commons.codec.binary.Hex
 
-class RandBytesUseCase(private val randomDataSource: RandomDataSource) {
+class RandBytesUseCase(private val rng: Rng) {
 
     enum class Format {
         Base64, Hex
@@ -28,7 +28,7 @@ class RandBytesUseCase(private val randomDataSource: RandomDataSource) {
 
     operator fun invoke(length: Int, format: Format): String =
         when (format) {
-            Format.Base64 -> String(Base64.encodeBase64(ByteArray(length).apply { randomDataSource.randBytes(this) }))
-            Format.Hex -> String(Hex.encodeHex(ByteArray(length).apply { randomDataSource.randBytes(this) }))
+            Format.Base64 -> String(Base64.encodeBase64(ByteArray(length).apply { rng.randBytes(this) }))
+            Format.Hex -> String(Hex.encodeHex(ByteArray(length).apply { rng.randBytes(this) }))
         }
 }

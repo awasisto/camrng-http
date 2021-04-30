@@ -16,10 +16,10 @@
 
 package com.wasisto.camrnghttp.server.domain.usecases
 
-import com.wasisto.camrnghttp.server.domain.interfaces.RandomDataSource
+import com.wasisto.camrnghttp.server.domain.interfaces.Rng
 import java.nio.ByteBuffer
 
-class RandUniformUseCase(private val randomDataSource: RandomDataSource) {
+class RandUniformUseCase(private val rng: Rng) {
     operator fun invoke(min: Double, max: Double, length: Int) =
-        List(length) { min + (ByteBuffer.wrap(ByteArray(8).apply { randomDataSource.randBytes(this) }).long ushr 11) / (1L shl 53).toDouble() * (max - min) }
+        List(length) { min + (ByteBuffer.wrap(ByteArray(8).apply { rng.randBytes(this) }).long ushr 11) / (1L shl 53).toDouble() * (max - min) }
 }

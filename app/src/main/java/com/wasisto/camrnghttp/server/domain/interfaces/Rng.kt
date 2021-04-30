@@ -14,16 +14,8 @@
  * limitations under the License.
  */
 
-package com.wasisto.camrnghttp.random
+package com.wasisto.camrnghttp.server.domain.interfaces
 
-import com.wasisto.camrnghttp.server.domain.interfaces.RandomDataSource
-import java.util.*
-
-class PrngRandomDataSource(seed: Long) : RandomDataSource {
-
-    private val random = Random(seed)
-
-    override fun randBytes(bytes: ByteArray) {
-        random.nextBytes(bytes)
-    }
+interface Rng {
+    fun randBytes(bytes: ByteArray)
 }

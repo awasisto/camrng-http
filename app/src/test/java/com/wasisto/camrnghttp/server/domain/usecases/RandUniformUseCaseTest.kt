@@ -16,7 +16,7 @@
 
 package com.wasisto.camrnghttp.server.domain.usecases
 
-import com.wasisto.camrnghttp.random.PrngRandomDataSource
+import com.wasisto.camrnghttp.rng.PseudoRng
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
 import org.junit.Before
@@ -28,7 +28,7 @@ class RandUniformUseCaseTest {
 
     @Before
     fun setUp() {
-        randUniformUseCase = RandUniformUseCase(PrngRandomDataSource(seed = 0))
+        randUniformUseCase = RandUniformUseCase(PseudoRng(seed = 0))
     }
 
     @Test

@@ -16,12 +16,12 @@
 
 package com.wasisto.camrnghttp.server.domain.usecases
 
-import com.wasisto.camrnghttp.server.domain.interfaces.RandomDataSource
+import com.wasisto.camrnghttp.server.domain.interfaces.Rng
 
-class RandBoolUseCase(private val randomDataSource: RandomDataSource) {
+class RandBoolUseCase(private val rng: Rng) {
     operator fun invoke(length: Int): List<Boolean> =
         ArrayList<Boolean>(length).apply {
-            val bytes = ByteArray((length shr 3) + 1).apply { randomDataSource.randBytes(this) }
+            val bytes = ByteArray((length shr 3) + 1).apply { rng.randBytes(this) }
             for (byte in bytes) {
                 for (i in 0 until 8) {
                     this += byte.toInt() shr i and 1 == 1

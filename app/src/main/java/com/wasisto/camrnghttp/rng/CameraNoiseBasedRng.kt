@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.wasisto.camrnghttp.random
+package com.wasisto.camrnghttp.rng
 
 import android.content.Context
 import com.wasisto.camrng.LensFacing
 import com.wasisto.camrng.NoiseBasedCamRng
-import com.wasisto.camrnghttp.server.domain.interfaces.RandomDataSource
+import com.wasisto.camrnghttp.server.domain.interfaces.Rng
 
-class CamrngRandomDataSource(private val context: Context) : RandomDataSource {
+class CameraNoiseBasedRng(private val context: Context) : Rng {
 
     private var byteIterator: Iterator<Byte>? = null
 

@@ -16,7 +16,7 @@
 
 package com.wasisto.camrnghttp.server.domain.usecases
 
-import com.wasisto.camrnghttp.random.PrngRandomDataSource
+import com.wasisto.camrnghttp.rng.PseudoRng
 import org.apache.commons.codec.binary.Base64
 import org.apache.commons.codec.binary.Hex
 import org.junit.Assert.assertArrayEquals
@@ -29,20 +29,20 @@ class RandBytesUseCaseTest {
 
     @Before
     fun setUp() {
-        randBytesUseCase = RandBytesUseCase(PrngRandomDataSource(seed = 0))
+        randBytesUseCase = RandBytesUseCase(PseudoRng(seed = 0))
     }
 
     @Test
     fun testInvoke_base64() {
         val length = 42
-        val expected = ByteArray(length).apply { PrngRandomDataSource(seed = 0).randBytes(this) }
+        val expected = ByteArray(length).apply { PseudoRng(seed = 0).randBytes(this) }
         assertArrayEquals(expected, Base64.decodeBase64(randBytesUseCase(length, RandBytesUseCase.Format.Base64).toByteArray()))
     }
 
     @Test
     fun testInvoke_hex() {
         val length = 42
-        val expected = ByteArray(length).apply { PrngRandomDataSource(seed = 0).randBytes(this) }
+        val expected = ByteArray(length).apply { PseudoRng(seed = 0).randBytes(this) }
         assertArrayEquals(expected, Hex.decodeHex(randBytesUseCase(length, RandBytesUseCase.Format.Hex).toCharArray()))
     }
 }
