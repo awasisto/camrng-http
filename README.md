@@ -8,13 +8,13 @@ https://play.google.com/store/apps/details?id=com.wasisto.camrnghttp
 Screenshots
 -----------
 
-![Screenshot 1](https://i.imgur.com/BlgODG0.png)
-![Screenshot 2](https://i.imgur.com/wcz5vkC.png)
+![Screenshot 1](https://user-images.githubusercontent.com/9427397/116733120-e6507600-aa15-11eb-8a07-a4b7e3bed08d.png)
+![Screenshot 2](https://user-images.githubusercontent.com/9427397/116733161-f6685580-aa15-11eb-8d1e-79ffbc35fa30.png)
 
 Architecture
 ------------
 
-![Architecture](https://i.imgur.com/X6QoIup.png)
+![Architecture](https://user-images.githubusercontent.com/9427397/116733046-ce78f200-aa15-11eb-8838-7474895935fb.png)
 
 API Documentation
 -----------------
