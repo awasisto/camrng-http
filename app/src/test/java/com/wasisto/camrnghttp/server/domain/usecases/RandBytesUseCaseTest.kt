@@ -36,13 +36,13 @@ class RandBytesUseCaseTest {
     fun testInvoke_base64() {
         val length = 42
         val expected = ByteArray(length).apply { PrngRandomDataSource(seed = 0).randBytes(this) }
-        assertArrayEquals(expected, Base64.decodeBase64(randBytesUseCase(length, RandBytesUseCase.Format.Base64)))
+        assertArrayEquals(expected, Base64.decodeBase64(randBytesUseCase(length, RandBytesUseCase.Format.Base64).toByteArray()))
     }
 
     @Test
     fun testInvoke_hex() {
         val length = 42
         val expected = ByteArray(length).apply { PrngRandomDataSource(seed = 0).randBytes(this) }
-        assertArrayEquals(expected, Hex.decodeHex(randBytesUseCase(length, RandBytesUseCase.Format.Hex)))
+        assertArrayEquals(expected, Hex.decodeHex(randBytesUseCase(length, RandBytesUseCase.Format.Hex).toCharArray()))
     }
 }
