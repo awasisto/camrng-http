@@ -33,7 +33,7 @@ class RestApiController(
 ) {
     fun randBytes(request: AsyncHttpServerRequest, response: AsyncHttpServerResponse) {
         val length = request[PARAM_LENGTH]?.toIntOrNull() ?: throw IllegalArgumentException()
-        require(length >= 0)
+        require(length > 0)
         var formatString = request[PARAM_FORMAT]?.toLowerCase(Locale.US)
         if (formatString == null) formatString = FORMAT_BASE64
         val format = when (formatString.toLowerCase(Locale.US)) {
