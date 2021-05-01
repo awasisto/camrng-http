@@ -65,7 +65,10 @@ class RestApiController(
         if (min == null) min = Int.MIN_VALUE
         var max = request[PARAM_MAX]?.toIntOrNull()
         if (max == null) max = Int.MAX_VALUE
-        require(min <= max)
+        if (min > max) {
+            min = Int.MIN_VALUE
+            max = Int.MAX_VALUE
+        }
         response.send(CONTENT_TYPE_JSON, gson.toJson(mapOf(
             Pair(JSON_ATTRIBUTE_ACTION, ACTION_RANDINT32),
             Pair(JSON_ATTRIBUTE_MIN, min),
@@ -82,7 +85,10 @@ class RestApiController(
         if (min == null) min = 0.0
         var max = request[PARAM_MAX]?.toDoubleOrNull()
         if (max == null) max = 1.0
-        require(min <= max)
+        if (min > max) {
+            min = 0.0
+            max = 1.0
+        }
         response.send(CONTENT_TYPE_JSON, gson.toJson(mapOf(
             Pair(JSON_ATTRIBUTE_ACTION, ACTION_RANDUNIFORM),
             Pair(JSON_ATTRIBUTE_MIN, min),
