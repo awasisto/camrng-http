@@ -21,11 +21,14 @@ import com.wasisto.camrnghttp.server.domain.interfaces.Rng
 class RandBoolUseCase(private val rng: Rng) {
     operator fun invoke(length: Int): List<Boolean> =
         ArrayList<Boolean>(length).apply {
-            val bytes = ByteArray((length shr 3) + 1).apply { rng.randBytes(this) }
-            for (byte in bytes) {
-                for (i in 0 until 8) {
-                    this += byte.toInt() shr i and 1 == 1
+            val buffer = ByteArray((length shr 3) + 1).apply { rng.randBytes(this) }
+            for (byte in buffer) {
+                val x = byte.toInt()
+                var mask = 0x80
+                while (mask != 0) {
+                    add(x and mask != 0)
                     if (size == length) return@apply
+                    mask = mask shr 1
                 }
             }
         }
