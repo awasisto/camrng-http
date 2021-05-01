@@ -32,7 +32,7 @@ class RandBoolUseCaseTest {
 
     @Test
     fun testInvoke() {
-        val length = 100
+        val length = 1000
 
         val generated = randBoolUseCase(length)
 
